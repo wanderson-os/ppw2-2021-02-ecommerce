@@ -1,14 +1,13 @@
 package br.edu.iftm.ecommerce.bean;
 
 import java.io.Serializable;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class HelloBean implements Serializable {
     
     private String nome;
