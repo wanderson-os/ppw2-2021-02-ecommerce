@@ -18,6 +18,7 @@ public class HelloBean implements Serializable {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ola "+ nome, null);
         
         fc.addMessage(null, fm);
+
     }
     
     //Metodos get e set
