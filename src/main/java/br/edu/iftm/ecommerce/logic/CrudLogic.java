@@ -1,16 +1,15 @@
 package br.edu.iftm.ecommerce.logic;
 
+import br.edu.iftm.ecommerce.util.exception.ErroNegocioException;
+import br.edu.iftm.ecommerce.util.exception.ErroSistemaException;
+import java.io.Serializable;
 import java.util.List;
 
-public interface CrudLogic<E> {
+public interface CrudLogic<E> extends Serializable {
     
-    // <>
-//    criar
-//    atualizar
-//    deletar
-//    buscar
-    public E salvar(E entidade);
-    public void remover(E entidade);
-    public List<E> buscar(E entidade);
+    public E salvar(E entidade) throws ErroSistemaException, ErroNegocioException;
+    public void remover(E entidade) throws ErroSistemaException, ErroNegocioException;
+    public E buscarPorId(E entidade) throws ErroSistemaException, ErroNegocioException;
+    public List<E> buscar(E entidade) throws ErroSistemaException, ErroNegocioException;
     
 }

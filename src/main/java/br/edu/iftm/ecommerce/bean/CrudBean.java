@@ -3,9 +3,14 @@ package br.edu.iftm.ecommerce.bean;
 import br.edu.iftm.ecommerce.logic.CrudLogic;
 import br.edu.iftm.ecommerce.model.Cliente;
 import br.edu.iftm.ecommerce.util.JSFUtil;
+import br.edu.iftm.ecommerce.util.exception.ErroNegocioException;
+import br.edu.iftm.ecommerce.util.exception.ErroSistemaException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
 
 public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
 
@@ -13,6 +18,12 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
     private E entidade;
     private List<E> entidades = new ArrayList<>();
     private L logic;
+    private Class<E> classeEntidade;
+
+    public CrudBean(Class<E> classeEntidade) {
+        this.classeEntidade = classeEntidade;
+    }
+    
     
     public enum EstadoDaTela {
         BUSCAR,
@@ -21,16 +32,56 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
     }
 
     public void novo(){
-        this.estadoDaTela = EstadoDaTela.INSERIR;
+        try {
+            this.entidade = this.classeEntidade.newInstance();
+            this.estadoDaTela = EstadoDaTela.INSERIR;
+        } catch (InstantiationException ex) {
+            addErro("Erro ao criar instância.");
+            Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            addErro("Erro ao criar instância.");
+            Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void salvar(){
-        this.logic.salvar(entidade);
-        buscar();
+    public void salvar() {
+        try {
+            this.getLogic().salvar(entidade);
+            buscar();
+            addInfo("Salvo com sucesso.");
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addErro(ex);
+            Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public void remover(E entidade){
+        try {
+            this.getLogic().remover(entidade);
+            this.entidades.remove(entidade);
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addErro(ex);
+            Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
     public void buscar() {
-        this.estadoDaTela = EstadoDaTela.BUSCAR;
+        if(!this.estadoDaTela.equals(EstadoDaTela.BUSCAR)){
+            this.estadoDaTela = EstadoDaTela.BUSCAR;
+        } else {
+            try {
+                this.entidades = getLogic().buscar(null);
+            } catch (ErroNegocioException ex) {
+                addAviso(ex);
+            } catch (ErroSistemaException ex) {
+                addErro(ex);
+                Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public EstadoDaTela getEstadoDaTela() {
@@ -56,6 +107,9 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
     public void setEntidades(List<E> entidades) {
         this.entidades = entidades;
     }
+
+    public abstract L getLogic();
+    
     
     
 }
