@@ -57,10 +57,24 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
         } 
     }
     
+    public void editar(E entidade){
+        
+        try {
+            this.entidade = this.getLogic().buscarPorId(entidade);
+            this.setEstadoDaTela(EstadoDaTela.ATUALIZAR);
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addErro(ex);
+            Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void remover(E entidade){
         try {
             this.getLogic().remover(entidade);
             this.entidades.remove(entidade);
+            addInfo("Removido com sucesso.");
         } catch (ErroNegocioException ex) {
             addAviso(ex);
         } catch (ErroSistemaException ex) {

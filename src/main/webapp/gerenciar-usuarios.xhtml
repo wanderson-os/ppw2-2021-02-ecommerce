@@ -31,9 +31,17 @@
 
             </p:panelGrid>
 
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+
             <p:dataTable value="#{usuarioBean.entidades}" var="usr" rendered="#{usuarioBean.estadoDaTela.name() == 'BUSCAR'}">
                 <p:column>
-                    <p:commandButton actionListener="#{usuarioBean.remover(usr)}" update="@form" value="Remover"></p:commandButton>
+                    <p:commandButton actionListener="#{usuarioBean.remover(usr)}" update="@form" icon="pi pi-trash">
+                        <p:confirm header="Confirma" message="Tem certeza que deseja deletar?" icon="pi pi-info-circle"/>
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{usuarioBean.editar(usr)}" update="@form" icon="pi pi-pencil"></p:commandButton>
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{usr.nome}"></h:outputText>

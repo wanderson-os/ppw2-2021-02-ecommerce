@@ -22,23 +22,23 @@ public class UsuarioLogic implements CrudLogic<Usuario>{
         if(entidade.getDataCadastro() == null){
             entidade.setDataCadastro(new Date());
         }
-        entidade = this.repository.salvar(entidade);
+        entidade = this.repository.save(entidade);
         return entidade;
     }
 
     @Override
     public void remover(Usuario entidade) throws ErroSistemaException, ErroNegocioException{
-        //this.usuarios.remove(entidade);
+        this.repository.remove(entidade.getId());
     }
 
     @Override
     public Usuario buscarPorId(Usuario entidade) throws ErroSistemaException, ErroNegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.repository.findByID(entidade.getId());
     }
     
     @Override
     public List<Usuario> buscar(Usuario entidade) throws ErroSistemaException, ErroNegocioException {
-        return this.repository.listar();
+        return this.repository.list();
     }
 
     

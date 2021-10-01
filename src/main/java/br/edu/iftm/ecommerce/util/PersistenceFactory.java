@@ -9,10 +9,11 @@ import javax.persistence.Persistence;
 
 @ApplicationScoped
 public class PersistenceFactory implements Serializable {
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("ecommercePU");
     
     @Produces
     public EntityManager getEntityManager(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ecommercePU");
         EntityManager em = emf.createEntityManager();
         return em;
     }
