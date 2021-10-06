@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
 
-    private EstadoDaTela estadoDaTela = EstadoDaTela.BUSCAR;
+    private EstadoDaTela estadoDaTela;
     private E entidade;
     private List<E> entidades = new ArrayList<>();
     private L logic;
@@ -22,6 +22,7 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
 
     public CrudBean(Class<E> classeEntidade) {
         this.classeEntidade = classeEntidade;
+        this.buscar();
     }
     
     
@@ -30,11 +31,10 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
         INSERIR,
         ATUALIZAR
     }
-
-    public void novo(){
+    
+    public void instanciarEntidade(){
         try {
             this.entidade = this.classeEntidade.newInstance();
-            this.estadoDaTela = EstadoDaTela.INSERIR;
         } catch (InstantiationException ex) {
             addErro("Erro ao criar instância.");
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,6 +42,12 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
             addErro("Erro ao criar instância.");
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void novo(){
+        instanciarEntidade();
+        this.estadoDaTela = EstadoDaTela.INSERIR;
+ 
     }
     
     public void salvar() {
@@ -84,11 +90,12 @@ public abstract class CrudBean<E, L extends CrudLogic<E>> extends JSFUtil{
     }
     
     public void buscar() {
-        if(!this.estadoDaTela.equals(EstadoDaTela.BUSCAR)){
+        if(!EstadoDaTela.BUSCAR.equals(this.estadoDaTela)){
             this.estadoDaTela = EstadoDaTela.BUSCAR;
+            this.instanciarEntidade();
         } else {
             try {
-                this.entidades = getLogic().buscar(null);
+                this.entidades = getLogic().buscar(this.entidade);
             } catch (ErroNegocioException ex) {
                 addAviso(ex);
             } catch (ErroSistemaException ex) {
