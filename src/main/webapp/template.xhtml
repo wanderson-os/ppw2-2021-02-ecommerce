@@ -10,6 +10,8 @@
         <title>Facelets Template</title>
         <h:outputStylesheet library="ecommerceif" name="css/bootstrap-reboot.css"></h:outputStylesheet>
         <h:outputStylesheet library="ecommerceif" name="css/estilo.css"></h:outputStylesheet>
+        <h:outputStylesheet library="ecommerceif" name="css/fontawsome_all.css"></h:outputStylesheet>
+
     </h:head>
 
     <h:body>
@@ -26,9 +28,20 @@
                     LOGO
                 </div>
                 <ul>
-                    <li><a href="index.xhtml"><i class="pi pi-home"></i> Dashboard</a></li>
+                    <li><a href="index.xhtml"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                     <li><a href="gerenciar-usuarios.xhtml"><i class="pi pi-users"></i> Usuarios</a></li>
-                    <li><a href="">Financeiro</a></li>
+                    <li class="submenu"><a href="javascript:"><i class="fas fa-wallet"></i> Financeiro <i class="fas fa-angle-down"></i></a>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-cash-register"></i> Caixa</a></li>
+                            <li><a href="#"> <i class="fas fa-boxes"></i> Estoque</a></li>
+                            <li class="submenu"><a href="javascript:"><i class="fas fa-wallet"></i> Financeiro <i class="fas fa-angle-down"></i></a>
+                                <ul>
+                                    <li><a href="#"><i class="fas fa-cash-register"></i> Caixa</a></li>
+                                    <li><a href="#"> <i class="fas fa-boxes"></i> Estoque</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a href="">Relatório</a></li>
                     <li><a href="">Configuração</a></li>
                 </ul>
@@ -38,6 +51,7 @@
                     <p:autoUpdate/>
                 </p:messages>
                 <ui:insert></ui:insert>
+
             </div>
             <footer>
                 Rodapé

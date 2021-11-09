@@ -99,6 +99,14 @@
 .main-sidebar ul li a:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
+.main-sidebar ul li ul {
+    padding-left: 10px;
+    display: none;
+}
+
+.main-sidebar ul li.submenu-active ul {
+    display: block;
+}
 .content-wrapper {
     transition: margin-left .4s ease-in-out,width .4s ease-in-out;
 }

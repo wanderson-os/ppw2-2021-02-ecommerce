@@ -40,7 +40,7 @@
 
             <p:dataTable value="#{usuarioBean.entidades}" var="usr" rendered="#{usuarioBean.estadoDaTela.name() == 'BUSCAR'}">
                 <p:column>
-                    <p:commandButton actionListener="#{usuarioBean.remover(usr)}" update="@form" icon="pi pi-trash">
+                    <p:commandButton actionListener="#{usuarioBean.remover(usr)}" update="@form" icon="fas fa-trash">
                         <p:confirm header="Confirma" message="Tem certeza que deseja deletar?" icon="pi pi-info-circle"/>
                     </p:commandButton>
                     <p:commandButton actionListener="#{usuarioBean.editar(usr)}" update="@form" icon="pi pi-pencil"></p:commandButton>
