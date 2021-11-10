@@ -17,9 +17,10 @@ function isMobile() {
 
 document.querySelectorAll('.submenu').forEach(function (element, index, array) {
     element.addEventListener("click",
-            function () {
-                this.classList.toggle('submenu-active');
-                console.log(this)
+            function (event) {
+                let submenu = this.nextElementSibling;
+                submenu.classList.toggle('submenu-active');
+                
             }
     );
 
