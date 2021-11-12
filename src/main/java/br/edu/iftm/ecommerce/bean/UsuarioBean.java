@@ -1,9 +1,7 @@
 package br.edu.iftm.ecommerce.bean;
 
-import br.edu.iftm.ecommerce.logic.ClienteLogic;
 import br.edu.iftm.ecommerce.logic.UsuarioLogic;
 import br.edu.iftm.ecommerce.model.Usuario;
-import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +9,7 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class UsuarioBean extends CrudBean<Usuario, UsuarioLogic> {
-
+    
     @Inject
     private UsuarioLogic logic;
 
