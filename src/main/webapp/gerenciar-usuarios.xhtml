@@ -25,6 +25,14 @@
                 <p:outputLabel value="Senha"></p:outputLabel>
                 <p:inputText  value="#{usuarioBean.entidade.senha}"></p:inputText>
                 
+                <p:outputLabel value="Permissões"></p:outputLabel>
+                <p:selectCheckboxMenu value="#{usuarioBean.entidade.permissoes}" label="Permissões"
+                                      multiple="true" filter="true" filterMatchMode="contains"
+                                      >
+                    <f:attribute name="collectionType" value="java.util.ArrayList&lt;br.edu.iftm.ecommerce.model.Permissao&gt;" />
+                    <f:selectItems value="#{usuarioBean.pemissoes}" var="per" itemLabel="#{per.nome}" itemValue="#{per}"></f:selectItems>
+                </p:selectCheckboxMenu>
+                
                 <p:dataList value="#{usuarioBean.entidade.permissoes}" var="p">
                     <p:column>
                         #{p.nome}

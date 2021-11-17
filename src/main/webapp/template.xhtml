@@ -48,11 +48,28 @@
                 </ul>
             </aside>
             <div class="content-wrapper">
-                <p:messages id="messages" closable="true" showDetail="true">
+                <p:messages id="messages" closable="false" showDetail="true">
                     <p:autoUpdate/>
                 </p:messages>
+                <p:growl showDetail="true">
+                    <p:autoUpdate/>
+                </p:growl>
                 <ui:insert></ui:insert>
-
+                <p:ajaxStatus onstart="PF('dialogAjaxStatus').show()" oncomplete="PF('dialogAjaxStatus').hide()">
+                    
+                </p:ajaxStatus>
+                <p:dialog id="dialogAjax" widgetVar="dialogAjaxStatus" closable="false" draggable="false" resizable="false" showHeader="false" modal="true"
+                           style="padding: 0;">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="textoAjax">
+                        Processando...
+                    </div>
+                </p:dialog>
             </div>
             <footer>
                 #{infoBean.versao} - #{infoBean.copyright}
