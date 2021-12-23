@@ -124,6 +124,14 @@
             <artifactId>maven-model</artifactId>
             <version>3.8.3</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat -->
+<dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat</artifactId>
+    <version>8.0.53</version>
+    <type>pom</type>
+</dependency>
     </dependencies>
 
     <build>
@@ -175,6 +183,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-javadoc-plugin</artifactId>
+  <version>3.2.0</version>
+  <executions>
+    <execution>
+      <id>attach-javadocs</id>
+      <goals>
+        <goal>jar</goal>
+      </goals>
+      <configuration>
+        <detectJavaApiLink>false</detectJavaApiLink>
+        <doclint>none</doclint>
+        <source>8</source>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+            
         </plugins>
     </build>
 

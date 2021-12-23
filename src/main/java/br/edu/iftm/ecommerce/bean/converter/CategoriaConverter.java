@@ -14,7 +14,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-@FacesConverter(forClass = Categoria.class)
+@FacesConverter(forClass = Categoria.class, value = "categoriaConverter")
 public class CategoriaConverter extends JSFUtil implements Converter<Categoria>{
 
     @Inject

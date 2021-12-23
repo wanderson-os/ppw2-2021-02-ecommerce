@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="template.xhtml"
+                xmlns:ec="http://xmlns.jcp.org/jsf/composite/ec">
+
+    <h:form>
+        <h1>Gerenciar Produto</h1>
+        <ec:toolbarCrud crudBean="#{produtoBean}"/>
+        <p:spacer height="50px"></p:spacer>
+        <p:panel header="">
+            <p:panelGrid columns="2" rendered="#{produtoBean.estadoDaTela.name() != 'BUSCAR'}">
+                <p:outputLabel value="Nome"></p:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.nome}"></p:inputText>
+
+                <p:outputLabel value="Descrição"></p:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.descricao}"></p:inputText>
+
+                <p:outputLabel value="Detalhes"></p:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.detalhes}"></p:inputText>
+
+                <p:outputLabel value="Valor"></p:outputLabel>
+                
+                <p:inputText value="#{produtoBean.entidade.valor}"></p:inputText>
+                
+                <p:outputLabel value="Categoria"></p:outputLabel>
+                <p:selectOneMenu value="#{produtoBean.entidade.categoria}" converter = "categoriaConverter">
+                    <f:selectItem itemLabel="Selecione"></f:selectItem>
+                    <f:selectItems value="#{produtoBean.categorias}" var="categoria" itemLabel="#{categoria.nome}" itemValue="#{categoria}"></f:selectItems>
+                </p:selectOneMenu>
+                
+                
+                <p:outputLabel value="Marca"></p:outputLabel>
+                <p:selectOneMenu value="#{produtoBean.entidade.marca}" converter="marcaConverter" >
+                    <f:selectItem itemLabel="Selecione"></f:selectItem>
+                    <f:selectItems value="#{produtoBean.marcas}" var="marca" itemLabel="#{marca.nome}" itemValue="#{marca}"></f:selectItems>
+                    
+                </p:selectOneMenu>
+
+                
+            </p:panelGrid>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+
+            <p:dataTable value="#{produtoBean.entidades}" var="entidade" rendered="#{produtoBean.estadoDaTela.name() == 'BUSCAR'}">
+                <p:column>
+                    <p:commandButton actionListener="#{produtoBean.remover(entidade)}" update="@form" icon="fas fa-trash">
+                        <p:confirm header="Confirma" message="Tem certeza que deseja deletar?" icon="pi pi-info-circle"/>
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{produtoBean.editar(entidade)}" update="@form" icon="pi pi-pencil"></p:commandButton>
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{entidade.nome}"></h:outputText>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panel>
+    </h:form>
+
+</ui:composition>
+

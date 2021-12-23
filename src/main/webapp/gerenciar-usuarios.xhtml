@@ -29,7 +29,7 @@
                 <p:selectCheckboxMenu value="#{usuarioBean.entidade.permissoes}" label="Permissões"
                                       multiple="true" filter="true" filterMatchMode="contains"
                                       >
-                    <f:attribute name="collectionType" value="java.util.ArrayList&lt;br.edu.iftm.ecommerce.model.Permissao&gt;" />
+                    <f:attribute name="collectionType" value="java.util.ArrayList" />
                     <f:selectItems value="#{usuarioBean.pemissoes}" var="per" itemLabel="#{per.nome}" itemValue="#{per}"></f:selectItems>
                 </p:selectCheckboxMenu>
                 
